@@ -1,0 +1,15 @@
+.link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #0056b3;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+}

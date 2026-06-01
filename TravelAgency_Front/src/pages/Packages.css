@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.packages-page {
+  font-family: 'Sora', sans-serif;
+  min-height: 100vh;
+  background: #f0f4ff;
+  padding: 40px;
+}
+
+
+.package-form {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(26, 107, 255, 0.08);
+  border: 1px solid #e4ecff;
+  padding: 32px;
+  margin-bottom: 40px;
+  max-width: 720px;
+  margin-left: auto;   
+  margin-right: auto;
+}
+
+.package-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0d1b4b;
+  margin: 0 0 24px 0;
+  letter-spacing: -0.5px;
+}
+
+.package-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a6bff;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-family: 'JetBrains Mono', monospace;
+  margin: 24px 0 14px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e4ecff;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: #5a6a9a;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1px solid #e4ecff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Sora', sans-serif;
+  color: #0d1b4b;
+  background: #f8faff;
+  transition: border-color 0.15s ease;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #1a6bff;
+  background: #fff;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.cancel-button {
+  background: transparent;
+  color: #5a6a9a;
+  border: 1px solid #e4ecff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 10px;
+  transition: background 0.15s ease;
+}
+
+.cancel-button:hover {
+  background: #f0f4ff;
+}
+
+.register-button {
+  background: #1a6bff;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.register-button:hover {
+  background: #1259d9;
+}
+
+.register-button:disabled {
+  background: #a0b8ff;
+  cursor: not-allowed;
+}
+
+.packages-table {
+  width: 100%;
+  table-layout: auto; 
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(26, 107, 255, 0.08);
+  border: 1px solid #e4ecff;
+  overflow: hidden;
+  display: table;
+}
+
+.packages-table-header tr {
+  background: #0d1b4b;
+}
+
+.packages-table-header th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #7b9cff;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 16px 14px;
+  text-align: left;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.packages-table-body tr {
+  border-bottom: 1px solid #eef2ff;
+  transition: background 0.15s ease;
+  width: 100%;
+}
+
+.packages-table-body tr:last-child {
+  border-bottom: none;
+}
+
+.packages-table-body tr:hover {
+  background: #f5f8ff;
+}
+
+.packages-table-body td {
+  padding: 13px 14px;
+  font-size: 13px;
+  color: #2d3a6b;
+  white-space: nowrap;
+}
+
+.edit-button {
+  background: #1a6bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Sora', sans-serif;
+  margin-right: 6px;
+  transition: background 0.15s ease;
+}
+
+.edit-button:hover {
+  background: #1259d9;
+}
+
+.toggle-status-button {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Sora', sans-serif;
+  transition: background 0.15s ease;
+}
+
+.toggle-status-button:hover {
+  background: #d9363e;
+}
+
+.toggle-status-button:disabled {
+  background: #d9d9d9;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.select-package {
+  background: #7b9cff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Sora', sans-serif;
+  margin-right: 6px;
+  transition: background 0.15s ease;
+}
+
+
+.promo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; 
+  margin-top: 15px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid #e4ecff;
+  width: 98%;
+}
+
+.promo-row-full {
+  width: 100%;
+}
+
+.promo-row-full input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 11px;
+}
+
+.promo-row-triple {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr; 
+  gap: 16px;
+  width: 100%;
+}
+
+.promo-section input {
+  padding: 12px 16px;
+  border: 1px solid #e4ecff;
+  border-radius: 8px;
+  background: #f8faff;
+  font-family: 'Sora', sans-serif;
+  outline: none;
+  font-size: 11px;
+}
+
+.promo-section input:focus {
+  border-color: #1a6bff;
+  background: #fff;
+}
+
+.promo-submit-btn {
+  width: 100%;
+  background: #0d1b4b;
+  color: white;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+}
+
+.promo-submit-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.promotion-table {
+  width: 100%;
+  table-layout: auto; 
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(26, 107, 255, 0.08);
+  border: 1px solid #e4ecff;
+  overflow: hidden;
+  display: table;
+}
+
+.promotion-table-header {
+    background-color: #1a234e; 
+    color: #7b9cff;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.promotion-table-header th {
+    padding: 18px 15px;
+    text-align: left;
+    font-weight: 600;
+    border: none;
+}
+
+.promotion-table-body tr {
+    transition: background-color 0.3s ease;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.promotion-table-body tr:last-child {
+    border-bottom: none;
+}
+
+.promotion-table-body tr:hover {
+    background-color: #f8faff; 
+}
+
+.promotion-table-body td {
+    padding: 15px;
+    color: #444;
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+.pomotion-title {
+  margin-top: 10px;
+}

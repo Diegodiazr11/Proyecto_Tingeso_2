@@ -1,0 +1,43 @@
+.report-page {
+    font-family: 'Sora', sans-serif;
+    min-height: 100vh;
+    background: #f0f4ff;
+    padding: 40px;
+}
+
+.report-card {
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: white;
+    border-radius: 10px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.report-card__rank {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #a0aec0;
+    min-width: 2rem;
+}
+
+.report-card__name {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+}
+
+.report-card__destination {
+    margin: 0 0 0.5rem 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.report-card__stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: #444;
+}

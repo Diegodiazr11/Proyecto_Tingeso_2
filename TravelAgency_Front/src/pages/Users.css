@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.users-wrapper {
+  font-family: 'Sora', sans-serif;
+  min-height: 100vh;
+  background: #f0f4ff;
+  padding: 40px;
+}
+
+.users-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.users-header-accent {
+  width: 6px;
+  height: 42px;
+  background: #1a6bff;
+  border-radius: 4px;
+}
+
+.users-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0d1b4b;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.users-header span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  background: #e0e9ff;
+  color: #1a6bff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.users-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(26, 107, 255, 0.08);
+  overflow: hidden;
+  border: 1px solid #e4ecff;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table thead {
+  background: #0d1b4b;
+}
+
+.users-table thead th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #7b9cff;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 16px 20px;
+  text-align: left;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid #eef2ff;
+  transition: background 0.15s ease;
+}
+
+.users-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.users-table tbody tr:hover {
+  background: #f5f8ff;
+}
+
+.users-table tbody td {
+  padding: 15px 20px;
+  font-size: 14px;
+  color: #2d3a6b;
+}
+
+.cell-username {
+  font-weight: 600;
+  color: #0d1b4b !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a6bff, #6b48ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.cell-rut {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px !important;
+  color: #5a6a9a !important;
+}
+
+.cell-email {
+  color: #1a6bff !important;
+  font-size: 13px !important;
+}
+
+.cell-phone {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px !important;
+  color: #5a6a9a !important;
+}
+
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: #8a9bc4;
+  font-size: 14px;
+}
+
+.loading-row td {
+  padding: 60px 20px;
+  text-align: center;
+  color: #8a9bc4;
+  font-size: 14px;
+}
+
+.action-btn-edit-btn{
+  background: #1a6bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 3px;
+}
+
+.action-btn-delete-btn{
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 3px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.modal-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.field label {
+    font-size: 13px;
+    color: #666;
+}
+
+.field input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}

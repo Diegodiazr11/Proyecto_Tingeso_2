@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.myReservation-container {
+  font-family: 'Sora', sans-serif;
+  min-height: 100vh;
+  background: #f0f4ff;
+  padding: 40px;
+}
+
+.myReservation-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.myReservation-header-bar {
+  width: 5px;
+  height: 38px;
+  background: #1a6bff;
+  border-radius: 4px;
+}
+
+.myReservation-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0d1b4b;
+  margin: 0;
+}
+
+.myReservation-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: #e0e9ff;
+  color: #1259d9;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.myReservation-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e4ecff;
+  box-shadow: 0 4px 24px rgba(26, 107, 255, 0.07);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.card-section {
+  margin-bottom: 20px;
+}
+
+.card-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8a9bc4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e4ecff;
+}
+
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.field label {
+  font-size: 12px;
+  color: #8a9bc4;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.field p {
+  font-size: 14px;
+  color: #0d1b4b;
+  margin: 0;
+  font-weight: 600;
+}
+
+.price {
+  font-family: 'JetBrains Mono', monospace;
+  color: #1a6bff ;
+}
+
+.status-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  background: #faeeda;
+  color: #854f0b;
+}
+
+.status-badge.CONFIRMED { background: #eaf3de; color: #3b6d11; }
+.status-badge.CANCELLED { background: #fcebeb; color: #a32d2d; }
+.status-badge.EXPIRED   { background: #f1efe8; color: #5f5e5a; }
+
+.pkg-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0d1b4b;
+  margin: 0 0 4px;
+}
+
+.pkg-destination {
+  font-size: 13px;
+  color: #1a6bff;
+  margin: 0 0 12px;
+}
+
+.classification-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: #e0e9ff;
+  color: #1259d9;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.pkg-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pkg-info-item label {
+  font-size: 12px;
+  color: #8a9bc4;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.pkg-info-item p {
+  font-size: 13px;
+  color: #2d3a6b;
+  margin: 0;
+}
+
+.dates-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.date-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: #e0e9ff;
+  color: #1259d9;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e4ecff;
+}
+
+.pay-button {
+  flex: 1;
+  background: #1a6bff;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.pay-button:hover {
+  background: #1259d9;
+}
+
+.cancel-button {
+  flex: 1;
+  background: #d93638;
+  color: #ffffff;
+  border: 1px solid #d93638;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.cancel-button:hover {
+  background: #a32d2d;
+}
+
+/* ── Empty state ───────────────────────────────────────── */
+
+.myReservation-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 40px;
+  text-align: center;
+}
+
+.myReservation-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #e0e9ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.myReservation-empty-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: #1a6bff;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.myReservation-empty h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0d1b4b;
+  margin: 0 0 8px;
+}
+
+.myReservation-empty p {
+  font-size: 14px;
+  color: #8a9bc4;
+  margin: 0 0 32px;
+  max-width: 280px;
+  line-height: 1.7;
+}
+
+.reserve-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a6bff;
+  color: #ffffff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.reserve-button:hover {
+  background: #1259d9;
+}
+
+.reserve-button svg {
+  width: 16px;
+  height: 16px;
+  stroke: #ffffff;
+  stroke-width: 2.5;
+  fill: none;
+  stroke-linecap: round;
+}
