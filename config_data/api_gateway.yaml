@@ -23,26 +23,26 @@ spring:
             allowCredentials: true
       routes:
         - id: user-service
-          uri: lb://User_TABack
+          uri: lb://User-TABack
           predicates:
             - Path=/api/user/**
         - id: reservation-service
-          uri: lb://Reservation_TABack
+          uri: lb://Reservation-TABack
           predicates:
             - Path=/api/reservations/**
         - id: packages-service
-          uri: lb://Packages_TABack
+          uri: lb://Packages-TABack
           predicates:
             - Path=/api/package/**
         - id: promotion-service
-          uri: lb://Promotion_TABack
+          uri: lb://Promotion-TABack
           predicates:
             - Path=/api/promotions/**
         - id: pay-service
-          uri: lb://Pay_TABack
+          uri: lb://Pay-TABack
           predicates:
             - Path=/api/pay/**
         - id: report-service
-          uri: lb://Report_TABack
+          uri: lb://Report-TABack
           predicates:
             - Path=/api/reports/**
