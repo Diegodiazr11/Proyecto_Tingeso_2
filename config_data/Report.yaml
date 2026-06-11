@@ -1,0 +1,11 @@
+server:
+  port: ${SERVER_PORT}
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: ${HOSTNAME}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-service:8761/eureka/

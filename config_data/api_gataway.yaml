@@ -1,0 +1,48 @@
+server:
+  port: 8050
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:5173'
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: user-service
+          uri: lb://User_TABack
+          predicates:
+            - Path=/api/user/**
+        - id: reservation-service
+          uri: lb://Reservation_TABack
+          predicates:
+            - Path=/api/reservations/**
+        - id: packages-service
+          uri: lb://Packages_TABack
+          predicates:
+            - Path=/api/package/**
+        - id: promotion-service
+          uri: lb://Promotion_TABack
+          predicates:
+            - Path=/api/promotions/**
+        - id: pay-service
+          uri: lb://Pay_TABack
+          predicates:
+            - Path=/api/pay/**
+        - id: report-service
+          uri: lb://Report_TABack
+          predicates:
+            - Path=/api/reports/**
