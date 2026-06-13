@@ -11,38 +11,40 @@ eureka:
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: 'http://localhost:5173'
-            allowedMethods: "*"
-            allowedHeaders: "*"
-            allowCredentials: true
-      routes:
-        - id: user-service
-          uri: lb://USER-TABACK
-          predicates:
-            - Path=/api/user/**
-        - id: reservation-service
-          uri: lb://RESERVATION-TABACK
-          predicates:
-            - Path=/api/reservations/**
-        - id: packages-service
-          uri: lb://PACKAGES-TABACK
-          predicates:
-            - Path=/api/package/**
-        - id: promotion-service
-          uri: lb://PROMOTION-TABACK
-          predicates:
-            - Path=/api/promotions/**
-        - id: pay-service
-          uri: lb://PAY-TABACK
-          predicates:
-            - Path=/api/pay/**
-        - id: report-service
-          uri: lb://REPORT-TABACK
-          predicates:
-            - Path=/api/reports/**
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns: 'http://localhost:5173'
+                allowedMethods: "*"
+                allowedHeaders: "*"
+                allowCredentials: true
+          routes:
+            - id: user-service
+              uri: lb://USER-TABACK
+              predicates:
+                - Path=/api/user/**
+            - id: reservation-service
+              uri: lb://RESERVATION-TABACK
+              predicates:
+                - Path=/api/reservations/**
+            - id: packages-service
+              uri: lb://PACKAGES-TABACK
+              predicates:
+                - Path=/api/package/**
+            - id: promotion-service
+              uri: lb://PROMOTION-TABACK
+              predicates:
+                - Path=/api/promotions/**
+            - id: pay-service
+              uri: lb://PAY-TABACK
+              predicates:
+                - Path=/api/pay/**
+            - id: report-service
+              uri: lb://REPORT-TABACK
+              predicates:
+                - Path=/api/reports/**
