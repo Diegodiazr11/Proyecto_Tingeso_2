@@ -26,23 +26,35 @@ spring:
           uri: lb://USER-TABACK
           predicates:
             - Path=/api/user/**
+          filters:
+            - TokenRelay=
         - id: reservation-service
           uri: lb://RESERVATION-TABACK
           predicates:
             - Path=/api/reservations/**
+          filters:
+            - TokenRelay=
         - id: packages-service
           uri: lb://PACKAGES-TABACK
           predicates:
             - Path=/api/package/**
+          filters:
+            - TokenRelay=
         - id: promotion-service
           uri: lb://PROMOTION-TABACK
           predicates:
             - Path=/api/promotions/**
+          filters:
+            - TokenRelay=
         - id: pay-service
           uri: lb://PAY-TABACK
           predicates:
             - Path=/api/pay/**
+          filters:
+            - TokenRelay=
         - id: report-service
           uri: lb://REPORT-TABACK
           predicates:
             - Path=/api/reports/**
+          filters:
+            - TokenRelay=
