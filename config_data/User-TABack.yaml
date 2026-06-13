@@ -1,9 +1,8 @@
 server:
-  port: ${SERVER_PORT}
+  port: 0
 eureka:
   instance:
     preferIpAddress: true
-    hostname: ${HOSTNAME}
   client:
     fetch-registry: true
     register-with-eureka: true
