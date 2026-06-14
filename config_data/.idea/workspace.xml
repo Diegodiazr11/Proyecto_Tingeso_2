@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="af48f9f1-190d-4d5e-abc6-352d6394eac4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../MiniKube/config-service-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/eureka-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/gateway-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/packages-taback-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/pay-taback-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/postgres-configmap.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/postgres-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/postgres-secret.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/promotion-taback-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/report-taback-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/reservation-taback-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MiniKube/user-taback-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Packages_TABack/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Packages_TABack/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Packages_TABack/src/main/java/diegodiaz/packages_taback/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Packages_TABack/src/main/java/diegodiaz/packages_taback/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Packages_TABack/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Packages_TABack/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pay_TABack/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Pay_TABack/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pay_TABack/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Pay_TABack/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/controller/PayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/controller/PayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/service/PayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Pay_TABack/src/main/java/diegodiaz/pay_taback/service/PayService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pay_TABack/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Pay_TABack/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Promotion_TABack/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Promotion_TABack/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Promotion_TABack/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Promotion_TABack/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Promotion_TABack/src/main/java/diegodiaz/promotion_taback/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Promotion_TABack/src/main/java/diegodiaz/promotion_taback/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Promotion_TABack/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Promotion_TABack/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/controller/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/controller/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/dto/ReservationResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/dto/ReservationResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/service/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/src/main/java/diegodiaz/reservation_taback/service/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reservation_TABack/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Reservation_TABack/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ClientReservation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ClientReservation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/DashboardAdmin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/DashboardAdmin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/DashboardClient.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/DashboardClient.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Packages.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Packages.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Pay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Pay.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ReportByPeriod.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ReportByPeriod.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ReportRanking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ReportRanking.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Reservation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Reservation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ReservationVoucher.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ReservationVoucher.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Users.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/Users.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ViewPackages.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ViewPackages.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ViewReservations.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../TravelAgency_Front/src/pages/ViewReservations.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../User_TABack/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../User_TABack/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../User_TABack/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../User_TABack/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../User_TABack/src/main/java/diegodiaz/user_taback/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../User_TABack/src/main/java/diegodiaz/user_taback/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../User_TABack/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../User_TABack/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/config_data.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3ExwYfuz3YJwoh59yNGtZqMmX7k" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/diegodiaz/Downloads/Proyecto_Tingeso_2/config_data&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af48f9f1-190d-4d5e-abc6-352d6394eac4" name="Changes" comment="" />
+      <created>1781133577951</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781133577951</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
