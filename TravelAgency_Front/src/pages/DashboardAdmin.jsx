@@ -12,7 +12,7 @@ function DashboardAdmin({ keycloak }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(`8001/api/user/search/${keycloakId}`);
+        const response = await api.get(`/api/user/search/${keycloakId}`);
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user:", error);

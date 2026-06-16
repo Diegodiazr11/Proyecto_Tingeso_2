@@ -1,9 +1,7 @@
 import jsPDF from 'jspdf';
 
-const ReservationVoucher = (reservation) => {
+const ReservationVoucher = (reservation, pkg, client) => {
     const doc = new jsPDF();
-    const pkg = reservation.travelPackage;
-    const client = reservation.client;
 
     const formatDate = (dateStr) =>
         new Date(dateStr).toLocaleDateString('es-CL', {

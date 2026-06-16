@@ -37,12 +37,12 @@ function Packages() {
 
     useEffect(() => {
         fetchPackages();
-        fecthPromotion();
+        fetchPromotion();
     }, []);
 
     const fetchPackages = async () => {
         try {
-            const response = await api.get('/api/package/all');
+            const response = await api.get('api/package/all');
             setPackages(response.data);
         } catch (error) {
             console.error("Error al cargar paquetes:", error);
@@ -73,8 +73,8 @@ function Packages() {
             return;
         }
 
-        if (formData.availableQoutas < 0) {
-            setError("Las cuotas disponibles no pueden ser negativas");
+        if (formData.availableQuotas < 0) {
+            setError("Las cupos disponibles no pueden ser negativas");
             setLoading(false);
             return;
         }
@@ -94,7 +94,7 @@ function Packages() {
         setLoading(true)
 
         try {
-            const response = await api.post('/api/package/register', formData);
+            const response = await api.post('api/package/register', formData);
             fetchPackages();
             setFormData({
                 namePackage: "",
@@ -131,7 +131,7 @@ function Packages() {
     const toggleStatus = async (id, currentStatus) => {
         if (!currentStatus) return;
         try {
-            await api.put(`/api/package/deactivate/${id}`);
+            await api.put(`api/package/deactivate/${id}`);
             fetchPackages();
         } catch (error) {
             alert("Error al desactivar el paquete");
@@ -169,14 +169,14 @@ function Packages() {
             return;
         }
 
-        if (formData.availableQoutas < 0) {
-            setError("Las cuotas disponibles no pueden ser negativas");
+        if (formData.availableQuotas < 0){
+            setError("Las cupos disponibles no pueden ser negativas");
             setLoading(false);
             return;
         }
         setLoading(true)
         try {
-            await api.put(`/api/package/update/${selectedId}`, formData);
+            await api.put(`api/package/update/${selectedId}`, formData);
             fetchPackages();
             setSuccess("Paqute actualizado");
             setTimeout(() => setSuccess(false), 3000);
@@ -221,13 +221,13 @@ function Packages() {
                 startDate: `${promoFormData.startDate}T00:00:00`,
                 endDate: `${promoFormData.endDate}T23:59:59`,
                 active: true,
-                travelPackage: { 
-                    id: parseInt(selectedPackageId) 
-                }
+                packageId: parseInt(selectedPackageId)
+
             };
-            const response = await api.post("/api/promotions/create", dataToSend);
-            fecthPromotion(); 
+            const response = await api.post("api/promotions/create", dataToSend);
+            await fetchPromotion();
             setPromoSuccess("¡Promoción creada exitosamente!");
+            setTimeout(() => setPromoSuccess(false), 3000);
             setPromoFormData({ name: '', description: '', percentageDiscount: '', startDate: '', endDate: '', active: true });
         } catch (error) {
             console.error("Error completo:", error.response?.data);
@@ -237,12 +237,13 @@ function Packages() {
         }
     };
 
-    const fecthPromotion = async () => {
+    const fetchPromotion = async () => {
         try {
-            const response = await api.get('/api/promotions/all');
-            setPromotion(response.data);
+            const response = await api.get('api/promotions/all');
+            setPromotion(Array.isArray(response.data) ? response.data : []);
         } catch (error) {
-            console.error("Error al cargar paquetes:", error);
+            console.error("Error al cargar promociones:", error);
+            setPromotion([]);
         }
     };
 
@@ -254,7 +255,7 @@ function Packages() {
             setError(null); 
             setPromoError(null); 
 
-            await api.patch(`/api/promotions/deactivate/${id}`);
+            await api.patch(`api/promotions/deactivate/${id}`);
 
             setPromoSuccess("¡Estado de la promoción actualizado!");
             await fetchPromotion(); 
@@ -634,30 +635,39 @@ function Packages() {
                     </thead>
                     <tbody className="promotion-table-body">
                         {promotion.length === 0 ? (
-                        <tr>
-                            <td colSpan="8">No hay promociones registradas</td>
-                        </tr>
-                        ) : (
-                        promotion.map((pro) => (
-                            <tr key={pro.id} className="promotion-table-row">
-                                <td>{pro.id}</td>
-                                <td>{pro.travelPackage?.namePackage || "Sin nombre"}</td>
-                                <td>{pro.name}</td>
-                                <td>{pro.percentageDiscount}%</td>
-                                <td>{new Date(pro.startDate).toLocaleDateString()}</td>
-                                <td>{new Date(pro.endDate).toLocaleDateString()}</td>
-                                <td>{pro.active ? "Activo" : "Inactivo"}</td>
-                                <td style={{ textAlign: 'center' }}>
-                                    {pro.active ? 
-                                    (<button
-                                        className="toggle-status-button"
-                                        style={{ backgroundColor: pro.active ? '#f0625d' : '#6c757d' }}
-                                        onClick={() => handleDeactivatePromo(pro.id)}
-                                        > Desactivar
-                                    </button>) : ""}
-                                </td>
+                            <tr>
+                                <td colSpan="8">No hay promociones registradas</td>
                             </tr>
-                        ))
+                        ) : (
+                            promotion.map((pro) => {
+                                
+                                const matchingPackage = packages.find(pkg => pkg.id == pro.packageId);
+
+                                return (
+                                    <tr key={pro.id} className="promotion-table-row">
+                                        <td>{pro.id}</td>
+                                        
+                                        <td>{matchingPackage ? matchingPackage.namePackage : "—"}</td>
+                                        
+                                        <td>{pro.name}</td>
+                                        <td>{pro.percentageDiscount}%</td>
+                                        <td>{new Date(pro.startDate).toLocaleDateString()}</td>
+                                        <td>{new Date(pro.endDate).toLocaleDateString()}</td>
+                                        <td>{pro.active ? "Activo" : "Inactivo"}</td>
+                                        <td style={{ textAlign: 'center' }}>
+                                            {pro.active ? (
+                                                <button
+                                                    className="toggle-status-button"
+                                                    style={{ backgroundColor: '#f0625d' }}
+                                                    onClick={() => handleDeactivatePromo(pro.id)}
+                                                > 
+                                                    Desactivar
+                                                </button>
+                                            ) : ""}
+                                        </td>
+                                    </tr>
+                                );
+                            })
                         )}
                     </tbody>
                 </table>

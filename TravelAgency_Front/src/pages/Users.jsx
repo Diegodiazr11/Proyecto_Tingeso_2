@@ -16,7 +16,7 @@ function Users() {
 
     const fetchUsers = async () => {
         try {
-            const response = await api.get("8001/api/user/search");
+            const response = await api.get("api/user/search");
             const fetchedUsers = response.data;
             setUsers(fetchedUsers);
             await fetchAllRoles(fetchedUsers);
@@ -33,7 +33,7 @@ function Users() {
             fetchedUsers.map(async (user) => {
                 if (!user.keycloakId) return;
                 try {
-                    const response = await api.get(`8001/api/user/role?userId=${user.keycloakId}`);
+                    const response = await api.get(`api/user/role?userId=${user.keycloakId}`);
                     const roles = response.data;
 
                     if (roles.includes("admin")) {
@@ -78,7 +78,7 @@ function Users() {
     const updateUser = async () => {
         setError(null);
         try {
-            await api.put(`8001/api/user/update/${selectedUser.keycloakId}`, formData)
+            await api.put(`api/user/update/${selectedUser.keycloakId}`, formData)
             await fetchUsers();
             setSuccess("Usuario actualizado correctamente.");
             setTimeout(() => setSuccess(false), 3000);
@@ -96,7 +96,7 @@ function Users() {
 
     const deleteUser = async () => {
         try {
-            const response = await api.delete(`8001/api/user/delete/${userToDelete}`); 
+            const response = await api.delete(`api/user/delete/${userToDelete}`); 
             const action = response.data?.action;
             await fetchUsers();
             setUserToDelete(null);

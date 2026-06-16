@@ -41,8 +41,12 @@ function Reservation() {
         try {
             const keycloakId = localStorage.getItem('keycloakId');
             const sessionId  = localStorage.getItem('sessionId');
-            const response = await api.get('8002/api/reservations/preview', {
-                params: { keycloakId, sessionId, packageId: pkg.id, passengerCount }
+            const response = await api.post('api/reservations/preview', {
+                keycloakId,
+                sessionId,
+                packageId: pkg.id,
+                passengerCount,
+                pricePackage: pkg.pricePackage
             });
             setTotalPrice(response.data.totalPrice);
             setAppliedDiscounts(response.data.appliedDiscounts ?? []);
@@ -61,15 +65,17 @@ function Reservation() {
         try {
             const keycloakId = localStorage.getItem('keycloakId');
             const sessionId  = localStorage.getItem('sessionId');
-            const response = await api.post('8002/api/reservations/create', null, {
-                params: {
-                    keycloakId,
-                    sessionId,
-                    packageId: pkg.id,
-                    passengerCount,
-                    specialRequests: specialRequests || undefined,
-                }
-            });
+            const response = await api.post('api/reservations/create', {
+                keycloakId,
+                sessionId,
+                packageId: pkg.id,
+                passengerCount,
+                specialRequests: specialRequests || null,
+                pricePackage: pkg.pricePackage,
+                clientActive: true,
+                packageAvailable: pkg.status,
+                availableQuotas: pkg.availableQuotas
+            })
             navigate('/client/pay', { 
                 state: { 
                     pay: pkg, 

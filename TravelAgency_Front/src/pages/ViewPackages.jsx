@@ -40,7 +40,7 @@ function ViewPackages() {
             if (maxDuration) params.maxDuration = maxDuration;
             if (sortBy) params.sortBy = sortBy;
 
-            const response = await api.get('/api/package/search', { params });
+            const response = await api.get('api/package/search', { params });
             setPackages(response.data);
         } catch (error) {
             console.error("Error al buscar paquetes:", error);

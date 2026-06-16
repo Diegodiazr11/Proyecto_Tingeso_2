@@ -32,7 +32,7 @@ function Profile({ keycloak }) {
 
     const fetchUser = async () => {
         try {
-            const response = await api.get(`8001/api/user/search/${keycloakId}`);
+            const response = await api.get(`api/user/search/${keycloakId}`);
             setUser(response.data);
         } catch (error) {
             console.error("Error fetching user:", error);
@@ -100,7 +100,7 @@ function Profile({ keycloak }) {
                 ...(formData.newPassword && { password: formData.newPassword })
             };
 
-            await api.put(`8001/api/user/update/${keycloakId}`, body);
+            await api.put(`api/user/update/${keycloakId}`, body);
             setUser({ ...user, ...formData });
             setSuccess("Datos actualizados");
             setTimeout(() => setSuccess(false), 3000);

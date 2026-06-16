@@ -56,7 +56,7 @@ function Pay() {
 
         setLoading(true);
         try {
-            await api.post('/api/pay/create', {
+            await api.post('api/pay/create', {
                 reservationId,
                 price:  totalPrice,
                 format: 'Tarjeta de crédito',

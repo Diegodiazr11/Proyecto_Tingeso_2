@@ -26,7 +26,7 @@ function ReportByPeriod () {
         setError('');
         setLoading(true);
         try {
-            const response = await api.get("/api/reports/period", { params: { startDate, endDate } });
+            const response = await api.get("api/reports/period", { params: { startDate, endDate } });
             setReport(response.data);
         } catch (error) {
             console.error("Error al buscar reportes:", error);

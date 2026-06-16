@@ -14,26 +14,30 @@ function ClientReservation({ keycloak }) {
     CANCELLED: "Cancelada",
     EXPIRED: "Expirada"
   };
+  const [user, setUser] = useState(null);
 
   const keycloakId = keycloak.subject;
 
   useEffect(() => {
-    if(keycloakId){
-      fetchMyReservation();
+    if (keycloakId) {
+        fetchMyReservation();
+
+        // Cargar usuario
+        api.get(`api/user/search/${keycloakId}`)
+            .then(res => setUser(res.data))
+            .catch(err => console.error("Error fetching user:", err));
     }
+
     const interval = setInterval(() => {
-      fetchMyReservation();
-    }, 30000); 
+        fetchMyReservation();
+    }, 30000);
+
     return () => clearInterval(interval);
   }, [keycloakId]);
 
   const fetchMyReservation = async () => {
     try {
-      const userResponse = await api.get(`/api/user/search/${keycloakId}`);
-      const clientId = userResponse.data.id;
-      
-      const response = await api.get(`/api/reservations/client/${clientId}`);
-      
+      const response = await api.get(`api/reservations/client/${keycloakId}`);
       setMyReservations(response.data); 
       
     } catch (error) {
@@ -70,7 +74,7 @@ function ClientReservation({ keycloak }) {
     const confirmed = window.confirm("¿Estás seguro de que deseas cancelar tu reserva?")
     if (!confirmed) return
     try {
-        await api.patch(`/api/reservations/cancel/${resId}`);
+        await api.patch(`api/reservations/cancel/${resId}`);
         setMyReservations(prev =>
             prev.map(r => r.id === resId ? { ...r, status: 'CANCELLED' } : r)
         );
@@ -79,15 +83,6 @@ function ClientReservation({ keycloak }) {
         console.error("Error cancel reservation:", error);
     }
   }
-  useEffect(() => {
-    fetchMyReservation(); 
-
-    const interval = setInterval(() => {
-      fetchMyReservation();
-    }, 30000);
-
-    return () => clearInterval(interval); 
-  }, []);
 
   if (loading) return <p>Cargando...</p>;
   if (!myReservation || myReservation.length === 0) return (
@@ -119,7 +114,7 @@ function ClientReservation({ keycloak }) {
       </div>
 
       {myReservation.map((reservation) => {
-        const pkg = reservation.travelPackage;
+        const pkg = reservation.packageId;
         return (
           <div className="myReservation-card" key={reservation.id}>
 
@@ -137,7 +132,7 @@ function ClientReservation({ keycloak }) {
                       </span>
                   </p>
                 </div>
-                {reservation.status !== 'CONFIRMED' && reservation.status !== 'CANCELLED' && reservation.status !== 'EXPERID' && 
+                {reservation.status !== 'CONFIRMED' && reservation.status !== 'CANCELLED' && reservation.status !== 'EXPIRED' && 
                 <div className="field"><label>Tiempo para pagar</label><p>{formatDateTime(reservation.expiresAt)}</p></div>}
               </div>
             </div>
@@ -173,7 +168,7 @@ function ClientReservation({ keycloak }) {
                 {reservation.status === 'CONFIRMED' && (
                   <button
                     className="cancel-button"
-                    onClick={() => ReservationVoucher(reservation)}
+                    onClick={() => ReservationVoucher(reservation, pkg, user)}
                   >
                     Descargar comprobante
                   </button>

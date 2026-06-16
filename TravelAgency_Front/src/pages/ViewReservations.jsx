@@ -20,7 +20,7 @@ function ViewReservations() {
 
     const fetchReservations = async () => {
         try {
-            const response = await api.get("/api/reservations/all");
+            const response = await api.get("api/reservations/all");
             setReservations(response.data);
         } catch (error) {
             console.error("Error fetching reservations:", error);
@@ -75,8 +75,8 @@ function ViewReservations() {
                 </div>
             ) : (
                 reservations.map((reservation) => {
-                    const pkg = reservation.travelPackage;
-                    const client = reservation.client;
+                    const pkg = reservation.packageId;
+                    const client = reservation.clientKeycloakId;
                     return (
                         <div className="myReservation-card" key={reservation.id}>
 
@@ -132,8 +132,8 @@ function ViewReservations() {
                                         </p>
                                     </div>
                                     <div className="field">
-                                        <label>Fecha límite de pago</label>
-                                        <p>{formatDateTime(reservation.expiresAt)}</p>
+                                        {reservation.status !== 'CONFIRMED' && reservation.status !== 'CANCELLED' && reservation.status !== 'EXPIRED' && 
+                                        <div className="field"><label>Tiempo para pagar</label><p>{formatDateTime(reservation.expiresAt)}</p></div>}
                                     </div>
                                 </div>
                             </div>
