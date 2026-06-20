@@ -1,0 +1,12 @@
+server:
+  port: 8090
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          default-label: main
+          uri: https://github.com/Diegodiazr11/Proyecto_Tingeso_2
+          search-paths: config_data
+  application:
+    name: config-service
