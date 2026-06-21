@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation-taback
+  labels:
+    app: reservation-taback
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservation-taback
+  template:
+    metadata:
+      labels:
+        app: reservation-taback
+    spec:
+      containers:
+        - name: reservation-taback
+          image: dirgo11/reservation-taback:latest
+          ports:
+            - containerPort: 8002
+          env:
+            - name: SERVER_PORT
+              value: "0"
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: BD_URL
+              value: "jdbc:postgresql://postgres-service:5432/BD_TravelAgency"
+            - name: BD_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: username
+            - name: BD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: KC_REALM_NAME
+              value: "TravelAgency"
+            - name: KC_HOST
+              value: "keycloak-service:9090"
+            - name: KC_ISSUER_HOST
+              value: "localhost:9090"
+            - name: KC_USER_CONSOLE
+              value: "admin"
+            - name: KC_USER_PASSWORD
+              value: "admin"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reservation-taback
+spec:
+  selector:
+    app: reservation-taback
+  ports:
+    - port: 8080
+      targetPort: 8002

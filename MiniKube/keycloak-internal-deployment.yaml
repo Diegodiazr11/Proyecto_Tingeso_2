@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-internal
+  labels:
+    app: keycloak-internal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak-internal
+  template:
+    metadata:
+      labels:
+        app: keycloak-internal
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:26.5.7
+          args: ["start-dev", "--import-realm"]
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: "admin"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "admin"
+            - name: KC_HTTP_ENABLED
+              value: "true"
+            - name: KC_HTTP_HOST
+              value: "0.0.0.0"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: realm-volume
+              mountPath: /opt/keycloak/data/import
+      volumes:
+        - name: realm-volume
+          configMap:
+            name: realm-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-service
+spec:
+  selector:
+    app: keycloak-internal
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 8080
