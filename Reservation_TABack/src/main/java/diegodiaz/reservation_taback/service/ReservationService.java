@@ -18,7 +18,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,27 +31,22 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final RestTemplate restTemplate;
 
-
-    // ─────────────────────────────────────────────
-    // GET ALL
-    // ─────────────────────────────────────────────
-    public List<ReservationResponseDTO> getAllReservations() {
-        // 1. Buscamos las reservaciones de la base de datos local
-        List<ReservationEntity> entities = reservationRepository.findAll();
-
-        // 2. EXTRAEMOS EL TOKEN JWT DEL ADMINISTRADOR QUE HIZO LA PETICIÓN
+    private HttpEntity<Void> createAuthenticatedRequest() {
         String token = "";
         var auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof JwtAuthenticationToken jwtAuth) {
-            token = jwtAuth.getToken().getTokenValue(); // Aquí capturamos el String del token puro
+            token = jwtAuth.getToken().getTokenValue();
         }
-
-        // 3. CREAMOS LAS CABECERAS HTTP E INYECTAMOS EL TOKEN COMO BEARER
         HttpHeaders headers = new HttpHeaders();
         if (!token.isEmpty()) {
-            headers.setBearerAuth(token); // Esto agrega automáticamente "Authorization: Bearer <token>"
+            headers.setBearerAuth(token);
         }
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        return new HttpEntity<>(headers);
+    }
+
+    public List<ReservationResponseDTO> getAllReservations() {
+        List<ReservationEntity> entities = reservationRepository.findAll();
+        HttpEntity<Void> requestEntity = createAuthenticatedRequest();
 
         return entities.stream().map(entity -> {
             ReservationResponseDTO dto = new ReservationResponseDTO();
@@ -62,41 +56,30 @@ public class ReservationService {
             dto.setTotalPrice(entity.getTotalPrice());
             dto.setStatus(entity.getStatus());
             dto.setExpiresAt(entity.getExpiresAt());
+            dto.setCreatedAt(entity.getCreatedAt());
             dto.setDiscountAmount(entity.getDiscountAmount());
 
-            // 4. LLAMADA AL PUERTO 8001 USANDO EL TOKEN ENVIADO
             if (entity.getClientKeycloakId() != null) {
                 try {
-                    String urlCliente = "http://localhost:8001/api/user/search/" + entity.getClientKeycloakId();
-
-                    // IMPORTANTE: Usamos .exchange(...) en vez de .getForObject(...) para poder meter el 'requestEntity' con los headers
+                    String urlCliente = "http://USER-TABACK/api/user/search/" + entity.getClientKeycloakId();
                     ResponseEntity<ClientDetailsDTO> response = restTemplate.exchange(
-                            urlCliente,
-                            HttpMethod.GET,
-                            requestEntity, // <-- Aquí viaja el Token del Administrador logueado
-                            ClientDetailsDTO.class
+                            urlCliente, HttpMethod.GET, requestEntity, ClientDetailsDTO.class
                     );
-
                     dto.setClientKeycloakId(response.getBody());
                 } catch (Exception e) {
-                    System.out.println("Error al obtener cliente desde el puerto 8001: " + e.getMessage());
+                    System.out.println("Error al obtener cliente: " + e.getMessage());
                 }
             }
 
-            // 5. LLAMADA AL PUERTO 8003 (PAQUETES)
             if (entity.getPackageId() != null) {
                 try {
-                    String urlPaquetes = "http://localhost:8003/api/package/search/" + entity.getPackageId();
-                    // Si el puerto 8003 no pide token (tiene permitAll), puedes dejarlo con getForObject:
-                    PackageDetailsDTO pkgDto = restTemplate.getForObject(urlPaquetes, PackageDetailsDTO.class);
-
-                    // Si el 8003 también te empezara a pedir token en el futuro, usas la misma lógica:
-                    // ResponseEntity<PackageDetailsDTO> responsePkg = restTemplate.exchange(urlPaquetes, HttpMethod.GET, requestEntity, PackageDetailsDTO.class);
-                    // PackageDetailsDTO pkgDto = responsePkg.getBody();
-
-                    dto.setPackageId(pkgDto);
+                    String urlPaquetes = "http://PACKAGES-TABACK/api/package/search/" + entity.getPackageId();
+                    ResponseEntity<PackageDetailsDTO> responsePkg = restTemplate.exchange(
+                            urlPaquetes, HttpMethod.GET, requestEntity, PackageDetailsDTO.class
+                    );
+                    dto.setPackageId(responsePkg.getBody());
                 } catch (Exception e) {
-                    System.out.println("Error al obtener paquete desde el puerto 8003: " + e.getMessage());
+                    System.out.println("Error al obtener paquete: " + e.getMessage());
                 }
             }
 
@@ -104,20 +87,14 @@ public class ReservationService {
         }).collect(Collectors.toList());
     }
 
-    // ─────────────────────────────────────────────
-    // GET BY ID
-    // ─────────────────────────────────────────────
     public ReservationEntity getReservationById(Long id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
     }
 
-    // ─────────────────────────────────────────────
-    // GET BY CLIENT KEYCLOAK ID
-    // ─────────────────────────────────────────────
     public List<ReservationResponseDTO> getReservationsByClient(String keycloakId) {
-        // 1. Buscas las reservaciones del cliente normalmente
         List<ReservationEntity> entities = reservationRepository.findByClientKeycloakId(keycloakId);
+        HttpEntity<Void> requestEntity = createAuthenticatedRequest();
 
         return entities.stream().map(entity -> {
             ReservationResponseDTO dto = new ReservationResponseDTO();
@@ -129,18 +106,13 @@ public class ReservationService {
             dto.setExpiresAt(entity.getExpiresAt());
             dto.setDiscountAmount(entity.getDiscountAmount());
 
-            // 2. SOLUCIÓN: Le pedimos al microservicio de paquetes los datos usando el ID
             if (entity.getPackageId() != null) {
                 try {
-                    // Apuntamos a la ruta exacta que ya tenías: search/{id}
-                    String urlPaquetes = "http://localhost:8003/api/package/search/" + entity.getPackageId();
-
-                    // Al retornar una entidad directa, la recibimos directamente como PackageDetailsDTO.class
-                    PackageDetailsDTO pkgDto = restTemplate.getForObject(urlPaquetes, PackageDetailsDTO.class);
-
-                    // Se lo asignamos al DTO de respuesta
-                    dto.setPackageId(pkgDto);
-
+                    String urlPaquetes = "http://PACKAGES-TABACK/api/package/search/" + entity.getPackageId();
+                    ResponseEntity<PackageDetailsDTO> responsePkg = restTemplate.exchange(
+                            urlPaquetes, HttpMethod.GET, requestEntity, PackageDetailsDTO.class
+                    );
+                    dto.setPackageId(responsePkg.getBody());
                 } catch (Exception e) {
                     System.out.println("No se pudo obtener el paquete del microservicio: " + e.getMessage());
                 }
@@ -150,12 +122,8 @@ public class ReservationService {
         }).collect(Collectors.toList());
     }
 
-    // ─────────────────────────────────────────────
-    // CREATE
-    // ─────────────────────────────────────────────
     @Transactional
     public ReservationEntity createReservation(CreateReservationRequest req) {
-
         if (!Boolean.TRUE.equals(req.getClientActive()))
             throw new RuntimeException("Usuario inactivo, no puede reservar");
         if (!Boolean.TRUE.equals(req.getPackageAvailable()))
@@ -188,16 +156,17 @@ public class ReservationService {
         reservation.setExpiresAt(LocalDateTime.now().plusMinutes(720));
         reservation.setDiscountDetail(String.join(", ", breakdown.getAppliedDiscounts()));
 
-        // Descontar cupos en el microservicio de paquetes
-        restTemplate.put("http://localhost:8003/api/package/" + req.getPackageId()
-                + "/quotas?delta=" + (-req.getPassengerCount()), null);
+
+        HttpEntity<Void> requestEntity = createAuthenticatedRequest();
+        int deltaCupos = req.getPassengerCount() * -1;
+        restTemplate.exchange(
+                "http://PACKAGES-TABACK/api/package/" + req.getPackageId() + "/quotas?delta=" + deltaCupos,
+                HttpMethod.PUT, requestEntity, Void.class
+        );
 
         return reservationRepository.save(reservation);
     }
 
-    // ─────────────────────────────────────────────
-    // PREVIEW
-    // ─────────────────────────────────────────────
     public ReservationDTO previewReservation(PreviewReservationRequest req) {
         double baseTotal = req.getPricePackage() * req.getPassengerCount();
         DiscountBreakdownDTO breakdown = calculateDiscountWithDetail(
@@ -214,9 +183,6 @@ public class ReservationService {
         return preview;
     }
 
-    // ─────────────────────────────────────────────
-    // CONFIRM
-    // ─────────────────────────────────────────────
     @Transactional
     public ReservationEntity confirmReservation(Long id) {
         ReservationEntity reservation = reservationRepository.findById(id)
@@ -229,9 +195,6 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    // ─────────────────────────────────────────────
-    // CANCEL
-    // ─────────────────────────────────────────────
     @Transactional
     public ReservationEntity cancelReservation(Long id) {
         ReservationEntity reservation = reservationRepository.findById(id)
@@ -244,17 +207,16 @@ public class ReservationService {
         if (reservation.getStatus().equals(ReservationEntity.STATUS_CONFIRMED) && !isAdmin)
             throw new RuntimeException("No se puede cancelar una reserva ya confirmada");
 
-        // Devolver cupos al microservicio de paquetes
-        restTemplate.put("http://localhost:8003/api/package/" + reservation.getPackageId()
-                + "/quotas?delta=" + reservation.getPassengerCount(), null);
+        HttpEntity<Void> requestEntity = createAuthenticatedRequest();
+        restTemplate.exchange(
+                "http://PACKAGES-TABACK/api/package/" + reservation.getPackageId() + "/quotas?delta=" + reservation.getPassengerCount(),
+                HttpMethod.PUT, requestEntity, Void.class
+        );
 
         reservation.setStatus(ReservationEntity.STATUS_CANCELLED);
         return reservationRepository.save(reservation);
     }
 
-    // ─────────────────────────────────────────────
-    // EXPIRE (scheduler cada 1 minuto)
-    // ─────────────────────────────────────────────
     @Transactional
     @Scheduled(fixedRate = 60000)
     public void expireReservations() {
@@ -263,16 +225,17 @@ public class ReservationService {
 
         expired.forEach(r -> {
             r.setStatus(ReservationEntity.STATUS_EXPIRED);
-            restTemplate.put("http://localhost:8003/api/package/" + r.getPackageId()
-                    + "/quotas?delta=" + r.getPassengerCount(), null);
+            int deltaCupos = r.getPassengerCount() * -1;
+            try {
+                restTemplate.put("http://PACKAGES-TABACK/api/package/" + r.getPackageId() + "/quotas?delta=" + deltaCupos, null);
+            } catch (Exception e) {
+                System.out.println("Error al devolver cupos en expiración automática: " + e.getMessage());
+            }
         });
 
         reservationRepository.saveAll(expired);
     }
 
-    // ─────────────────────────────────────────────
-    // Endpoints internos para cuando el front elimina un usuario
-    // ─────────────────────────────────────────────
     public boolean hasConfirmedReservations(String keycloakId) {
         return reservationRepository.existsByClientKeycloakIdAndStatus(
                 keycloakId, ReservationEntity.STATUS_CONFIRMED);
@@ -286,9 +249,6 @@ public class ReservationService {
         reservationRepository.saveAll(pending);
     }
 
-    // ─────────────────────────────────────────────
-    // Lógica de descuentos
-    // ─────────────────────────────────────────────
     @Value("${discount.group.min-passengers}")
     private int groupMinPassengers;
     @Value("${discount.group.percent}")
@@ -307,48 +267,60 @@ public class ReservationService {
                                                              Long packageId) {
         double accumulatedPercent = 0;
         List<String> appliedDiscounts = new ArrayList<>();
+        HttpEntity<Void> requestEntity = createAuthenticatedRequest();
 
-        BigDecimal promotionDiscount = restTemplate.getForObject(
-                "http://localhost:8004/api/promotions/discount?packageId=" + packageId,
-                BigDecimal.class
-        );
-        if (promotionDiscount == null) promotionDiscount = BigDecimal.ZERO;
-        double promoValue = promotionDiscount.doubleValue();
-        double dynamicMaxPercent = Math.max(maxTotalPercent, promoValue);
+        try {
+            ResponseEntity<BigDecimal> responsePromo = restTemplate.exchange(
+                    "http://PROMOTION-TABACK/api/promotions/discount?packageId=" + packageId,
+                    HttpMethod.GET, requestEntity, BigDecimal.class
+            );
+            BigDecimal promotionDiscount = responsePromo.getBody();
+            if (promotionDiscount == null) promotionDiscount = BigDecimal.ZERO;
+            double promoValue = promotionDiscount.doubleValue();
+            double dynamicMaxPercent = Math.max(maxTotalPercent, promoValue);
 
-        if (promoValue > 0) {
-            accumulatedPercent += promoValue;
-            appliedDiscounts.add("Promoción activa: " + (int) promoValue + "%");
-        }
-
-        if (passengerCount >= groupMinPassengers) {
-            accumulatedPercent += groupPercent;
-            appliedDiscounts.add("Descuento por grupo: " + (int) groupPercent + "%");
-        }
-
-        long paidReservations = reservationRepository
-                .countByClientKeycloakIdAndStatus(keycloakId, ReservationEntity.STATUS_CONFIRMED);
-        if (paidReservations >= frequentMinReservations) {
-            accumulatedPercent += frequentPercent;
-            appliedDiscounts.add("Cliente frecuente: " + (int) frequentPercent + "%");
-        }
-
-        if (sessionId != null) {
-            long sessionReservations = reservationRepository
-                    .countByClientKeycloakIdAndSessionId(keycloakId, sessionId);
-            if (sessionReservations == 2) {
-                accumulatedPercent += multiPackagePercent;
-                appliedDiscounts.add("Múltiples paquetes: " + (int) multiPackagePercent + "%");
+            if (promoValue > 0) {
+                accumulatedPercent += promoValue;
+                appliedDiscounts.add("Promoción activa: " + (int) promoValue + "%");
             }
+
+            if (passengerCount >= groupMinPassengers) {
+                accumulatedPercent += groupPercent;
+                appliedDiscounts.add("Descuento por grupo: " + (int) groupPercent + "%");
+            }
+
+            long paidReservations = reservationRepository
+                    .countByClientKeycloakIdAndStatus(keycloakId, ReservationEntity.STATUS_CONFIRMED);
+            if (paidReservations >= frequentMinReservations) {
+                accumulatedPercent += frequentPercent;
+                appliedDiscounts.add("Cliente frecuente: " + (int) frequentPercent + "%");
+            }
+
+            if (sessionId != null) {
+                long sessionReservations = reservationRepository
+                        .countByClientKeycloakIdAndSessionId(keycloakId, sessionId);
+                if (sessionReservations == 2) {
+                    accumulatedPercent += multiPackagePercent;
+                    appliedDiscounts.add("Múltiples paquetes: " + (int) multiPackagePercent + "%");
+                }
+            }
+
+            double finalTotalPercent = Math.min(accumulatedPercent, dynamicMaxPercent);
+            double discountAmount = baseTotal * (finalTotalPercent / 100);
+
+            DiscountBreakdownDTO breakdown = new DiscountBreakdownDTO();
+            breakdown.setDiscountAmount(discountAmount);
+            breakdown.setTotalDiscountPercent(finalTotalPercent);
+            breakdown.setAppliedDiscounts(appliedDiscounts);
+            return breakdown;
+
+        } catch (Exception e) {
+            System.out.println("Error al calcular descuentos con microservicios externos: " + e.getMessage());
+            DiscountBreakdownDTO fallback = new DiscountBreakdownDTO();
+            fallback.setDiscountAmount(0);
+            fallback.setTotalDiscountPercent(0);
+            fallback.setAppliedDiscounts(List.of("Error de conexión con promociones"));
+            return fallback;
         }
-
-        double finalTotalPercent = Math.min(accumulatedPercent, dynamicMaxPercent);
-        double discountAmount = baseTotal * (finalTotalPercent / 100);
-
-        DiscountBreakdownDTO breakdown = new DiscountBreakdownDTO();
-        breakdown.setDiscountAmount(discountAmount);
-        breakdown.setTotalDiscountPercent(finalTotalPercent);
-        breakdown.setAppliedDiscounts(appliedDiscounts);
-        return breakdown;
     }
 }

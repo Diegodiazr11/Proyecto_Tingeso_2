@@ -1,4 +1,4 @@
 FROM eclipse-temurin:21
-ARG JAR_FILE=target/TravelAgency_Back.jar
-COPY ${JAR_FILE} TravelAgency_Back.jar
-ENTRYPOINT ["java", "-jar", "/TravelAgency_Back.jar"]
+ARG JAR_FILE=target/Reservation_TABack.jar
+COPY ${JAR_FILE} Reservation_TABack.jar
+ENTRYPOINT ["java", "-jar", "/Reservation_TABack.jar"]

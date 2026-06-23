@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 public class ReservationResponseDTO {
     private Long id;
     private int passengerCount;
-    private double basePrice;  // Se mapea de tu precio por persona
+    private double basePrice;
     private double totalPrice;
-    private String status;     // PENDING, CONFIRMED, etc.
+    private LocalDateTime createdAt;
+    private String status;
     private LocalDateTime expiresAt;
     private double discountAmount;
 
-    // En lugar de un Long id, aquí enviamos el objeto completo del paquete
     private PackageDetailsDTO packageId;
 
     private ClientDetailsDTO clientKeycloakId;;

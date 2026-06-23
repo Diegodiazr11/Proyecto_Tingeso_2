@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.PUT;
 import java.util.List;
 
 @RestController
@@ -32,27 +33,23 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getReservationById(id));
     }
 
-    // Cambiado de clientId (Long) a keycloakId (String)
     @GetMapping("/client/{keycloakId}")
     public ResponseEntity<List<ReservationResponseDTO>> getReservationsByClient(@PathVariable String keycloakId) {
-        // El servicio ahora se encargará de devolver los DTOs estructurados
         List<ReservationResponseDTO> dtos = reservationService.getReservationsByClient(keycloakId);
         return ResponseEntity.ok(dtos);
     }
 
-    // El front manda todos los datos necesarios en el body
     @PostMapping("/create")
     public ResponseEntity<ReservationEntity> createReservation(@RequestBody CreateReservationRequest req) {
         return ResponseEntity.ok(reservationService.createReservation(req));
     }
 
-    // El front manda precio y datos del paquete en el body
     @PostMapping("/preview")
     public ResponseEntity<ReservationDTO> previewReservation(@RequestBody PreviewReservationRequest req) {
         return ResponseEntity.ok(reservationService.previewReservation(req));
     }
 
-    @PatchMapping("/{id}/confirm")
+    @PutMapping("/{id}/confirm")
     public ResponseEntity<ReservationEntity> confirmReservation(@PathVariable Long id) {
         return ResponseEntity.ok(reservationService.confirmReservation(id));
     }
@@ -62,7 +59,6 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.cancelReservation(id));
     }
 
-    // ── Endpoints internos llamados desde el front cuando elimina un usuario ──
 
     @GetMapping("/confirmed/exists")
     public ResponseEntity<Boolean> hasConfirmedReservations(@RequestParam String userId) {

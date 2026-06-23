@@ -1,6 +1,6 @@
 package diegodiaz.reservation_taback.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -9,8 +9,8 @@ import org.springframework.web.client.RestTemplate;
 public class AppConfig {
 
     @Bean
-    @Qualifier("internalRestTemplate")
-    public RestTemplate internalRestTemplate() {
+    @LoadBalanced
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 }
