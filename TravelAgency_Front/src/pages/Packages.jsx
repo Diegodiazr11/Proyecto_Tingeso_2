@@ -24,6 +24,12 @@ function Packages() {
         startDate: '', endDate: '', activate: true,
     });
 
+    const formatLocalDate = (dateString) => {
+        if (!dateString) return "";
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        return `${day}/${month}/${year}`;
+    };
+
     const [promotion, setPromotion] = useState([]);
     const [packages, setPackages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -472,8 +478,8 @@ function Packages() {
                                     <td>{pkg.namePackage}</td>
                                     <td>{pkg.destinationPackage}</td>
                                     <td>{pkg.classificationPackage}</td>
-                                    <td>{new Date(pkg.startDate).toLocaleDateString()}</td>
-                                    <td>{new Date(pkg.endDate).toLocaleDateString()}</td>
+                                    <td>{formatLocalDate(pkg.startDate)}</td>
+                                    <td>{formatLocalDate(pkg.endDate)}</td>
                                     <td>${(pkg.pricePackage).toLocaleString('en-US')}</td>
                                     <td>{pkg.availableQuotas}</td>
                                     <td>{pkg.status ? "Activo" : "Inactivo"}</td>
@@ -651,8 +657,8 @@ function Packages() {
                                         
                                         <td>{pro.name}</td>
                                         <td>{pro.percentageDiscount}%</td>
-                                        <td>{new Date(pro.startDate).toLocaleDateString()}</td>
-                                        <td>{new Date(pro.endDate).toLocaleDateString()}</td>
+                                        <td>{formatLocalDate(pro.startDate)}</td>
+                                        <td>{formatLocalDate(pro.endDate)}</td>
                                         <td>{pro.active ? "Activo" : "Inactivo"}</td>
                                         <td style={{ textAlign: 'center' }}>
                                             {pro.active ? (

@@ -20,7 +20,7 @@ function ViewReservations() {
 
     const fetchReservations = async () => {
         try {
-            const response = await api.get("api/reservations/all");
+            const response = await api.get("/api/reservations/all");
             setReservations(response.data);
         } catch (error) {
             console.error("Error fetching reservations:", error);
@@ -30,16 +30,18 @@ function ViewReservations() {
         }
     };
 
-    const formatDate = (dateStr) =>
-        new Date(dateStr).toLocaleDateString('es-CL', {
-            day: '2-digit', month: '2-digit', year: 'numeric'
-    });
-
     const formatDateTime = (dateStr) =>
         new Date(dateStr).toLocaleString('es-CL', {
             day: '2-digit', month: '2-digit', year: 'numeric',
             hour: '2-digit', minute: '2-digit'
     });
+
+    const formatLocalDate = (dateString) => {
+        if (!dateString) return "";
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        return `${day}/${month}/${year}`;
+    };
+
 
     const handleCancel = async (resId) => {
         const confirmed = window.confirm("¿Estás seguro de que deseas cancelar esta reserva?")
@@ -107,7 +109,6 @@ function ViewReservations() {
                                 </div>
                             </div>
 
-                            {/* DATOS DE LA RESERVA */}
                             <div className="card-section">
                                 <p className="section-label">Datos de la reserva</p>
                                 <div className="fields-grid">
@@ -131,14 +132,15 @@ function ViewReservations() {
                                             </span>
                                         </p>
                                     </div>
-                                    <div className="field">
-                                        {reservation.status !== 'CONFIRMED' && reservation.status !== 'CANCELLED' && reservation.status !== 'EXPIRED' && 
-                                        <div className="field"><label>Tiempo para pagar</label><p>{formatDateTime(reservation.expiresAt)}</p></div>}
-                                    </div>
+                                    {reservation.status !== 'EXPIRED' && reservation.status !== 'CANCELLED' && reservation.status !== 'CONFIRMED' &&
+                                        <div className="field">
+                                            <label>Fecha límite de pago</label>
+                                            <p>{formatDateTime(reservation.expiresAt)}</p>
+                                        </div>
+                                    }
                                 </div>
                             </div>
 
-                            {/* DATOS DEL PAQUETE */}
                             <div className="card-section">
                                 <p className="section-label">Datos del paquete</p>
                                 <p className="pkg-name">{pkg?.namePackage}</p>
@@ -165,8 +167,8 @@ function ViewReservations() {
                                     </div>
                                 </div>
                                 <div className="dates-row">
-                                    <span className="date-pill">Inicio: {formatDate(pkg?.startDate)}</span>
-                                    <span className="date-pill">Fin: {formatDate(pkg?.endDate)}</span>
+                                    <span className="date-pill">Inicio: {formatLocalDate(pkg?.startDate)}</span>
+                                    <span className="date-pill">Fin: {formatLocalDate(pkg?.endDate)}</span>
                                 </div>
                                 <div className="card-actions">
                                     {reservation.status !== 'EXPIRED' && reservation.status !== 'CANCELLED' && (

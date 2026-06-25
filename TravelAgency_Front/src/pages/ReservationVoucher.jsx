@@ -3,10 +3,11 @@ import jsPDF from 'jspdf';
 const ReservationVoucher = (reservation, pkg, client) => {
     const doc = new jsPDF();
 
-    const formatDate = (dateStr) =>
-        new Date(dateStr).toLocaleDateString('es-CL', {
-            day: '2-digit', month: '2-digit', year: 'numeric'
-        });
+    const formatLocalDate = (dateString) => {
+        if (!dateString) return "";
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        return `${day}/${month}/${year}`;
+    };
 
 
     doc.setFillColor(30, 64, 175);
@@ -86,13 +87,13 @@ const ReservationVoucher = (reservation, pkg, client) => {
     doc.setFont('helvetica', 'normal');
     doc.text(`Fecha inicio:`, 14, y);
     doc.setFont('helvetica', 'bold');
-    doc.text(`${formatDate(pkg?.startDate)}`, 50, y);
+    doc.text(`${formatLocalDate(pkg?.startDate)}`, 50, y);
 
     y += 8;
     doc.setFont('helvetica', 'normal');
     doc.text(`Fecha fin:`, 14, y);
     doc.setFont('helvetica', 'bold');
-    doc.text(`${formatDate(pkg?.endDate)}`, 50, y);
+    doc.text(`${formatLocalDate(pkg?.endDate)}`, 50, y);
 
     y += 8;
     doc.setFont('helvetica', 'normal');

@@ -40,10 +40,11 @@ function ViewPackages() {
             if (maxDuration) params.maxDuration = maxDuration;
             if (sortBy) params.sortBy = sortBy;
 
-            const response = await api.get('api/package/search', { params });
+            const response = await api.get('/api/package/search', { params });
             setPackages(response.data);
         } catch (error) {
             console.error("Error al buscar paquetes:", error);
+            setPackages([]);
         } finally {
             setLoading(false);
         }
@@ -69,6 +70,12 @@ function ViewPackages() {
         setMinDuration('');
         setMaxDuration('');
         setSortBy('');
+    };
+
+    const formatLocalDate = (dateString) => {
+        if (!dateString) return "";
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        return `${day}/${month}/${year}`;
     };
 
     const hasActiveFilters = search || classification || minPrice || maxPrice ||
@@ -205,10 +212,10 @@ function ViewPackages() {
                             <p className="package-price">${pkg.pricePackage.toLocaleString()}</p>
                             <div className="package-dates">
                                 <span className="package-date-badge">
-                                    Salida: {new Date(pkg.startDate).toLocaleDateString()}
+                                    Salida: {formatLocalDate(pkg.startDate)}
                                 </span>
                                 <span className="package-date-badge">
-                                    Regreso: {new Date(pkg.endDate).toLocaleDateString()}
+                                    Regreso: {formatLocalDate(pkg.endDate)}
                                 </span>
                             </div>
                             <p className="package-quotas">{pkg.availableQuotas} cupos disponibles</p>
@@ -248,11 +255,11 @@ function ViewPackages() {
                         <div className="view-modal-row">
                             <div className="field">
                                 <label>Fecha de salida</label>
-                                <p>{new Date(selectedPackage.startDate).toLocaleDateString()}</p>
+                                <p>{formatLocalDate(selectedPackage.startDate)}</p>
                             </div>
                             <div className="field">
                                 <label>Fecha de regreso</label>
-                                <p>{new Date(selectedPackage.endDate).toLocaleDateString()}</p>
+                                <p>{formatLocalDate(selectedPackage.endDate)}</p>
                             </div>
                         </div>
 

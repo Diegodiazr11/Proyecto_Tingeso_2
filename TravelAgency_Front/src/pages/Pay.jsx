@@ -77,6 +77,21 @@ function Pay() {
         }
     };
 
+    const formatLocalDate = (dateString) => {
+        if (!dateString) return "";
+
+        const meses = [
+            "enero", "febrero", "marzo", "abril", "mayo", "junio",
+            "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+        ];
+
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        const dia = parseInt(day, 10);
+        const mes = meses[parseInt(month, 10) - 1];
+
+        return `${dia} de ${mes} del ${year}`;
+    };
+
 
     return (
         <div className="pay-wrapper">
@@ -87,8 +102,8 @@ function Pay() {
                 <div className="pay-row"><span>Destino</span><strong>{pkg.destinationPackage}</strong></div>
                 <div className="pay-row"><span>Pasajeros</span><strong>{passengerCount} pasajero{passengerCount > 1 ? 's' : ''}</strong></div>
                 <div className="pay-row"><span>Precio por persona</span><strong>${(pkg.pricePackage).toLocaleString('en-US')}</strong></div>
-                <div className="pay-row"><span>Fecha de ida</span><strong>{new Date(pkg.startDate).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}</strong></div>
-                <div className="pay-row"><span>Fecha de vuelta</span><strong>{new Date(pkg.endDate).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}</strong></div>
+                <div className="pay-row"><span>Fecha de ida</span><strong>{formatLocalDate(pkg.startDate)}</strong></div>
+                <div className="pay-row"><span>Fecha de vuelta</span><strong>{formatLocalDate(pkg.endDate)}</strong></div>
                 <div className="pay-row"><span>Reserva N°</span><strong>#{reservationId}</strong></div>
                 {discountAmount == 0 ? "" : <div className="pay-row"><span>Descuento</span><strong>{discountPercent}%</strong></div>}
                 <div className="pay-divider" />

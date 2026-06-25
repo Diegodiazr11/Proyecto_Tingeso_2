@@ -51,12 +51,11 @@ function ClientReservation({ keycloak }) {
     new Date(dateStr).toLocaleDateString('es-CL', {
       day: '2-digit', month: '2-digit', year: 'numeric'
     });
-
-  const formatDateTime = (dateStr) =>
-    new Date(dateStr).toLocaleString('es-CL', {
-      day: '2-digit', month: '2-digit', year: 'numeric',
-      hour: '2-digit', minute: '2-digit'
-    });
+  const formatLocalDate = (dateString) => {
+        if (!dateString) return "";
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        return `${day}/${month}/${year}`;
+    };
   
   const handlePay = (res, pkg) => {
     navigate('/client/pay', { 
@@ -151,8 +150,8 @@ function ClientReservation({ keycloak }) {
                 <div className="pkg-info-item"><label>Restricciones</label><p>{pkg?.restrictionPackage}</p></div>
               </div>
               <div className="dates-row">
-                <span className="date-pill">Inicio: {formatDate(pkg?.startDate)}</span>
-                <span className="date-pill">Fin: {formatDate(pkg?.endDate)}</span>
+                <span className="date-pill">Inicio: {formatLocalDate(pkg?.startDate)}</span>
+                <span className="date-pill">Fin: {formatLocalDate(pkg?.endDate)}</span>
               </div>
               <div className="card-actions">
                 {reservation.status !== 'CONFIRMED' && reservation.status !== 'EXPIRED' && reservation.status !== 'CANCELLED' && (

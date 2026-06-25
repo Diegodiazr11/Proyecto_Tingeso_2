@@ -92,6 +92,21 @@ function Reservation() {
         }
     };
 
+    const formatLocalDate = (dateString) => {
+        if (!dateString) return "";
+
+        const meses = [
+            "enero", "febrero", "marzo", "abril", "mayo", "junio",
+            "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+        ];
+
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        const dia = parseInt(day, 10);
+        const mes = meses[parseInt(month, 10) - 1];
+
+        return `${dia} de ${mes} del ${year}`;
+    };
+
     return (
         <div className="reservation-wrapper">
 
@@ -116,11 +131,11 @@ function Reservation() {
                     </div>
                     <div className="summary-row">
                         <span>Salida</span>
-                        <strong>{new Date(pkg.startDate).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}</strong>
+                        <strong>{formatLocalDate(pkg.startDate)}</strong>
                     </div>
                     <div className="summary-row">
                         <span>Regreso</span>
-                        <strong>{new Date(pkg.endDate).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}</strong>
+                        <strong>{formatLocalDate(pkg.endDate)}</strong>
                     </div>
                     <div className="summary-row">
                         <span>Cupos disponibles</span>
